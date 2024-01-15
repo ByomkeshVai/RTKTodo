@@ -55,6 +55,7 @@ const TodoCard = ({
         defaultChecked={isCompleted}
       />
       <p className="font-semibold">{title}</p>
+      <p>{priority}</p>
       {/* <p>Time</p> */}
       <div>
         {isCompleted ? (
@@ -64,6 +65,7 @@ const TodoCard = ({
         )}
       </div>
       <p>{description}</p>
+
       <div className="space-x-5">
         <Button className="bg-red-500" onClick={() => selectDelete(_id)}>
           <svg

@@ -5,12 +5,13 @@ import TodoFilter from "./TodoFilter";
 import { useGetTodoQuery } from "@/redux/features/todoAPI/todoAPI";
 
 const TodoContainer = () => {
-  const { data: todos, isLoading, isError } = useGetTodoQuery();
+  const [priority, setPriority] = useState("");
+  const { data: todos, isLoading, isError } = useGetTodoQuery(priority);
   return (
     <div>
       <div className="flex justify-between mb-5 ">
         <AddTodoModal />
-        <TodoFilter />
+        <TodoFilter priority={priority} setPriority={setPriority} />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl  p-[5px]">
         <div className="bg-white p-5 w-full h-full rounded-lg space-y-3">
