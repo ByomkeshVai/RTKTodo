@@ -1,16 +1,23 @@
-import { Button } from '../ui/button';
-import { removeTodo } from '@/redux/features/todoSlice';
+import { Button } from "../ui/button";
+import { removeTodo } from "@/redux/features/todoSlice";
 
 type TTodoCardProps = {
-  id: string;
+  _id: string;
   title: string;
+  priority: string;
   description: string;
   isCompleted?: boolean;
 };
 
-const TodoCard = ({ title, description, id, isCompleted }: TTodoCardProps) => {
+const TodoCard = ({
+  title,
+  description,
+  priority,
+  _id,
+  isCompleted,
+}: TTodoCardProps) => {
   const toggleState = () => {
-    console.log('Toggle');
+    console.log("Toggle");
   };
 
   return (

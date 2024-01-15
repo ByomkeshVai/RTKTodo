@@ -20,13 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAddTodoMutation } from "@/redux/features/todoAPI/todoAPI";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
 
-  const [] = useAddTodoMutation(undefined);
+  const [addTodo, { isLoading, isError, isSuccess }] = useAddTodoMutation();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ const AddTodoModal = () => {
       priority: priority,
       isCompleted: false,
     };
-    console.log(taskDetails);
+    addTodo(taskDetails);
   };
 
   return (
