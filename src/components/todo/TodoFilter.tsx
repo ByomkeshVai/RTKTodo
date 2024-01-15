@@ -22,6 +22,7 @@ const TodoFilter = ({ priority, setPriority }) => {
         <DropdownMenuLabel>Filter by priority</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={priority} onValueChange={setPriority}>
+          <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="medium">Medium</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>

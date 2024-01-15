@@ -4,8 +4,9 @@ import {
 } from "@/redux/features/todoAPI/todoAPI";
 import { Button } from "../ui/button";
 import { removeTodo } from "@/redux/features/todoSlice";
+import TodoUpdateModal from "./TodoUpdateModal";
 
-type TTodoCardProps = {
+export type TTodoCardProps = {
   _id: string;
   title: string;
   priority: string;
@@ -48,25 +49,26 @@ const TodoCard = ({
   return (
     <div className="bg-white rounded-md flex justify-between items-center p-3 border">
       <input
+        className="mr-3"
         onChange={toggleState}
         type="checkbox"
         name="complete"
         id="complete"
         defaultChecked={isCompleted}
       />
-      <p className="font-semibold">{title}</p>
-      <p>{priority}</p>
+      <p className="font-semibold flex-1">{title}</p>
+      <p className="font-semibold flex-1">{priority}</p>
       {/* <p>Time</p> */}
-      <div>
+      <div className="flex-1">
         {isCompleted ? (
           <p className="text-green-500">Done</p>
         ) : (
           <p className="text-red-500">Pending</p>
         )}
       </div>
-      <p>{description}</p>
+      <p className="flex-[2]">{description}</p>
 
-      <div className="space-x-5">
+      <div className="space-x-5 ">
         <Button className="bg-red-500" onClick={() => selectDelete(_id)}>
           <svg
             className="size-5"
@@ -83,22 +85,13 @@ const TodoCard = ({
             ></path>
           </svg>
         </Button>
-        <Button className="bg-[#5C53FE]">
-          <svg
-            className="size-5"
-            fill="none"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-            ></path>
-          </svg>
-        </Button>
+        <TodoUpdateModal
+          title={title}
+          description={description}
+          priority={priority}
+          _id={_id}
+          isCompleted={isCompleted}
+        />
       </div>
     </div>
   );
