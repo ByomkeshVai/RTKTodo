@@ -1,3 +1,4 @@
+import { useUpdateToggleMutation } from "@/redux/features/todoAPI/todoAPI";
 import { Button } from "../ui/button";
 import { removeTodo } from "@/redux/features/todoSlice";
 
@@ -16,8 +17,23 @@ const TodoCard = ({
   _id,
   isCompleted,
 }: TTodoCardProps) => {
+  const [updateCompleted, { isLoading, isError, isSuccess }] =
+    useUpdateToggleMutation();
+
   const toggleState = () => {
-    console.log("Toggle");
+    const taskData = {
+      title,
+      description,
+      priority,
+      isCompleted: !isCompleted,
+    };
+    const options = {
+      id: _id,
+      data: {
+        ...taskData,
+      },
+    };
+    updateCompleted(options);
   };
 
   return (
@@ -27,6 +43,7 @@ const TodoCard = ({
         type="checkbox"
         name="complete"
         id="complete"
+        defaultChecked={isCompleted}
       />
       <p className="font-semibold">{title}</p>
       {/* <p>Time</p> */}

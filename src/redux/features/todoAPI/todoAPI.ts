@@ -20,7 +20,16 @@ export const baseAPI = createApi({
       }),
       invalidatesTags: ["todo"],
     }),
+    UpdateToggle: builder.mutation({
+      query: (options) => ({
+        url: `/task/${options.id}`,
+        method: "PUT",
+        body: options.data,
+      }),
+      invalidatesTags: ["todo"],
+    }),
   }),
 });
 
-export const { useGetTodoQuery, useAddTodoMutation } = baseAPI;
+export const { useGetTodoQuery, useAddTodoMutation, useUpdateToggleMutation } =
+  baseAPI;
