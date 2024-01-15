@@ -1,4 +1,7 @@
-import { useUpdateToggleMutation } from "@/redux/features/todoAPI/todoAPI";
+import {
+  useDeleteTodoMutation,
+  useUpdateToggleMutation,
+} from "@/redux/features/todoAPI/todoAPI";
 import { Button } from "../ui/button";
 import { removeTodo } from "@/redux/features/todoSlice";
 
@@ -17,8 +20,10 @@ const TodoCard = ({
   _id,
   isCompleted,
 }: TTodoCardProps) => {
-  const [updateCompleted, { isLoading, isError, isSuccess }] =
-    useUpdateToggleMutation();
+  const [updateCompleted] = useUpdateToggleMutation();
+
+  const [deleteTodo, { isLoading, isError, isSuccess }] =
+    useDeleteTodoMutation();
 
   const toggleState = () => {
     const taskData = {
@@ -34,6 +39,10 @@ const TodoCard = ({
       },
     };
     updateCompleted(options);
+  };
+
+  const selectDelete = (id: string) => {
+    deleteTodo(id);
   };
 
   return (
@@ -56,7 +65,7 @@ const TodoCard = ({
       </div>
       <p>{description}</p>
       <div className="space-x-5">
-        <Button className="bg-red-500">
+        <Button className="bg-red-500" onClick={() => selectDelete(_id)}>
           <svg
             className="size-5"
             fill="none"
