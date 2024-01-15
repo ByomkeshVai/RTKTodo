@@ -1,4 +1,4 @@
-// import { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TTodoCardProps } from "./TodoCard";
+import { useUpdateToggleMutation } from "@/redux/features/todoAPI/todoAPI";
 
 const TodoUpdateModal = ({
   title,
@@ -29,6 +30,31 @@ const TodoUpdateModal = ({
   _id,
   isCompleted,
 }: TTodoCardProps) => {
+  const [updateTask, setUpdateTask] = useState(title);
+  const [updateDescription, setUpdateDescription] = useState(description);
+  const [updatePriority, setUpdatePriority] = useState(priority);
+
+  const [updateTasks] = useUpdateToggleMutation(undefined);
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const taskData = {
+      title: updateTask,
+      description: updateDescription,
+      priority: updatePriority,
+      isCompleted: isCompleted,
+    };
+
+    const options = {
+      id: _id,
+      data: {
+        ...taskData,
+      },
+    };
+
+    updateTasks(options);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,13 +82,18 @@ const TodoUpdateModal = ({
             Add your tasks that you want to finish.
           </DialogDescription>
         </DialogHeader>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="task" className="text-right">
                 Task
               </Label>
-              <Input id="task" className="col-span-3" value={title} />
+              <Input
+                onBlur={(e) => setUpdateTask(e.target.value)}
+                id="task"
+                className="col-span-3"
+                defaultValue={title}
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
@@ -71,12 +102,16 @@ const TodoUpdateModal = ({
               <Input
                 id="description"
                 className="col-span-3"
-                value={description}
+                defaultValue={description}
+                onBlur={(e) => setUpdateDescription(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Priority</Label>
-              <Select value={priority}>
+              <Select
+                defaultValue={updatePriority}
+                onValueChange={setUpdatePriority}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>

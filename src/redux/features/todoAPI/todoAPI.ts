@@ -28,11 +28,13 @@ export const baseAPI = createApi({
       invalidatesTags: ["todo"],
     }),
     UpdateToggle: builder.mutation({
-      query: (options) => ({
-        url: `/task/${options.id}`,
-        method: "PUT",
-        body: options.data,
-      }),
+      query: (options) => {
+        return {
+          url: `/task/${options.id}`,
+          method: "PUT",
+          body: options.data,
+        };
+      },
       invalidatesTags: ["todo"],
     }),
     deleteTodo: builder.mutation({
